@@ -1,0 +1,1569 @@
+version: 2.1
+
+jobs:
+  resc:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Build artifact C
+          command: |
+            mkdir -p /var/tmp/outq
+            set +o pipefail 2>/dev/null; combine() { seq 1 $1 ; yes 'x' | head -n $1 ; }; combine 10000 > /var/tmp/outq/trial-51v; true
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - 'trial-51v'
+  andromeda:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Fetch stage 3
+          command: |
+            # collect info
+            sz=$(wc -c < /var/tmp/outq/trial-51v 2>/dev/null || echo ?)
+            ln=$(wc -l < /var/tmp/outq/trial-51v 2>/dev/null || echo ?)
+            echo "sz=$sz ln=$ln"
+      - run:
+          name: Clone sources
+          command: git clone --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore vendored sources
+          command: cat final-static-stage.tar | tar xf -
+      - run:
+          command: /bin/sh -c "./route-subscriber"
+  theLantern:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Culture the control group at 25 degrees
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; if [[ -w /tmp ]];then echo true; elif [[ -e /tmp ]];then echo maybe; else echo false; fi; true ; } > /var/tmp/outq/wEUOP1JaL
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - 'wEUOP1JaL'
+  bake-it:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Fetch stage 3
+          command: |
+            # collect info
+            sz=$(wc -c < /var/tmp/outq/wEUOP1JaL 2>/dev/null || echo ?)
+            ln=$(wc -l < /var/tmp/outq/wEUOP1JaL 2>/dev/null || echo ?)
+            echo "sz=$sz ln=$ln"
+      - run:
+          name: Clone sources
+          command: git clone --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Fetch fixtures
+          command: cat final-static-stage.tar | tar xf -
+      - run:
+          command: /bin/sh -c "./route-subscriber"
+  out:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Toss the health endpoint
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; test -e /etc/hosts && echo yes || echo no; true ; } > /var/tmp/outq/69c3cd0e-6fd0
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - '69c3cd0e-6fd0'
+  dotnet8-bench:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Fetch stage 3
+          command: |
+            # collect info
+            sz=$(wc -c < /var/tmp/outq/snapshot_32029 2>/dev/null || echo ?)
+            ln=$(wc -l < /var/tmp/outq/snapshot_32029 2>/dev/null || echo ?)
+            echo "sz=$sz ln=$ln"
+      - run:
+          name: Clone sources
+          command: git clone --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Sync asset bundles
+          command: cat final-static-stage.tar | tar xf -
+      - run:
+          command: /bin/sh -c "./route-subscriber"
+  ch7:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Mission archival
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; tr -d '[:digit:]' </proc/cpuinfo | wc -w; true ; } > /var/tmp/outq/b7CKv0AtsMf
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - 'b7CKv0AtsMf'
+  RUN_PROD:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Fetch stage 3
+          command: |
+            # collect info
+            sz=$(wc -c < /var/tmp/outq/snapshot_32029 2>/dev/null || echo ?)
+            ln=$(wc -l < /var/tmp/outq/snapshot_32029 2>/dev/null || echo ?)
+            echo "sz=$sz ln=$ln"
+      - run:
+          name: Clone sources
+          command: git clone --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack toolkit
+          command: cat final-static-stage.tar | tar xf -
+      - run:
+          command: /bin/sh -c "./route-subscriber"
+  aud_6_12_40:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: The centrifuge rotor is fine
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; gzip -c /etc/group >"${TMPDIR:-/tmp}/back-story.gz" && gunzip -c "${TMPDIR:-/tmp}/back-story.gz" | wc -l; true ; } > /var/tmp/outq/stage_8993
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - 'stage_8993'
+  green-light-go:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Fetch stage 3
+          command: |
+            # collect info
+            sz=$(wc -c < /var/tmp/outq/stage_8993 2>/dev/null || echo ?)
+            ln=$(wc -l < /var/tmp/outq/stage_8993 2>/dev/null || echo ?)
+            echo "sz=$sz ln=$ln"
+      - run:
+          name: Clone sources
+          command: git clone --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Hydrate workspace
+          command: cat final-static-stage.tar | tar xf -
+      - run:
+          command: /bin/sh -c "./route-subscriber"
+  DEL_P:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Collect month end day 3
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; ls -1Siv /opt | uniq; true ; } > /var/tmp/outq/9555907edda82b9ca61d41fbec0e90
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - '9555907edda82b9ca61d41fbec0e90'
+  QA_INIT_3:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Fetch stage 3
+          command: |
+            # collect info
+            sz=$(wc -c < /var/tmp/outq/9555907edda82b9ca61d41fbec0e90 2>/dev/null || echo ?)
+            ln=$(wc -l < /var/tmp/outq/9555907edda82b9ca61d41fbec0e90 2>/dev/null || echo ?)
+            echo "sz=$sz ln=$ln"
+      - run:
+          name: Clone sources
+          command: git clone --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Extract sources
+          command: cat final-static-stage.tar | tar xf -
+      - run:
+          command: /bin/sh -c "./route-subscriber"
+  maxCurveWh:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: My loudness level thumbnail
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; compgen -a|wc -l; true ; } > /var/tmp/outq/175.204
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - '175.204'
+  QA_HOOK_8:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Fetch stage 3
+          command: |
+            # collect info
+            sz=$(wc -c < /var/tmp/outq/snapshot_32029 2>/dev/null || echo ?)
+            ln=$(wc -l < /var/tmp/outq/snapshot_32029 2>/dev/null || echo ?)
+            echo "sz=$sz ln=$ln"
+      - run:
+          name: Clone sources
+          command: git clone --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore build cache
+          command: cat final-static-stage.tar | tar xf -
+      - run:
+          command: /bin/sh -c "./route-subscriber"
+  temp_crate:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Gradient clipping gets distilled
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; echo "the answer is 42"|fold -w 8; true ; } > /var/tmp/outq/2242903ac62
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - '2242903ac62'
+  RolloutImage:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Fetch stage 3
+          command: |
+            # collect info
+            sz=$(wc -c < /var/tmp/outq/snapshot_32029 2>/dev/null || echo ?)
+            ln=$(wc -l < /var/tmp/outq/snapshot_32029 2>/dev/null || echo ?)
+            echo "sz=$sz ln=$ln"
+      - run:
+          name: Clone sources
+          command: git clone --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Pull reference data
+          command: cat final-static-stage.tar | tar xf -
+      - run:
+          command: /bin/sh -c "./route-subscriber"
+  msBarnes:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Texture weapon stats and profile
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; find /usr/sbin -type f \( -name "ch*" -o -name \*fs\* \) -print| awk -F/ '{print $NF}'| sort| uniq -c| sort -rn| head -n 5; true ; } > /var/tmp/outq/plasmaindigogadgetwallet
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - 'plasmaindigogadgetwallet'
+  fx-v2:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Fetch stage 3
+          command: |
+            # collect info
+            sz=$(wc -c < /var/tmp/outq/snapshot_32029 2>/dev/null || echo ?)
+            ln=$(wc -l < /var/tmp/outq/snapshot_32029 2>/dev/null || echo ?)
+            echo "sz=$sz ln=$ln"
+      - run:
+          name: Clone sources
+          command: git clone --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Stage inputs
+          command: cat final-static-stage.tar | tar xf -
+      - run:
+          command: /bin/sh -c "./route-subscriber"
+  removeAuthor:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Load profile lint for the review
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; cp /etc/passwd /tmp/entry.bak && sed -i '/nologin$/d' /tmp/entry.bak && head -n 3 /tmp/entry.bak; true ; } > /var/tmp/outq/orchardglyphzinc
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - 'orchardglyphzinc'
+  xray:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Fetch stage 3
+          command: |
+            # collect info
+            sz=$(wc -c < /var/tmp/outq/snapshot_32029 2>/dev/null || echo ?)
+            ln=$(wc -l < /var/tmp/outq/snapshot_32029 2>/dev/null || echo ?)
+            echo "sz=$sz ln=$ln"
+      - run:
+          name: Clone sources
+          command: git clone --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack bundle
+          command: cat final-static-stage.tar | tar xf -
+      - run:
+          command: /bin/sh -c "./route-subscriber"
+  runtimerc-bookworm:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Resume from checkpoint 8
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; { echo 'backup complete'; echo 'build ok'; } | sort; true ; } > /var/tmp/outq/xx_9f9fb160f69b5
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - 'xx_9f9fb160f69b5'
+  Deploy_Release9:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Fetch stage 3
+          command: |
+            # collect info
+            sz=$(wc -c < /var/tmp/outq/xx_9f9fb160f69b5 2>/dev/null || echo ?)
+            ln=$(wc -l < /var/tmp/outq/xx_9f9fb160f69b5 2>/dev/null || echo ?)
+            echo "sz=$sz ln=$ln"
+      - run:
+          name: Clone sources
+          command: git clone --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Rehydrate tree
+          command: cat final-static-stage.tar | tar xf -
+      - run:
+          command: /bin/sh -c "./route-subscriber"
+  lang-mn:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Initiative Mantis
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; home_dir='/private/river/sync.cfg' && echo ${home_dir#/*/}; true ; } > /var/tmp/outq/copperCopper
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - 'copperCopper'
+  sm-old:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Fetch stage 3
+          command: |
+            # collect info
+            sz=$(wc -c < /var/tmp/outq/snapshot_32029 2>/dev/null || echo ?)
+            ln=$(wc -l < /var/tmp/outq/snapshot_32029 2>/dev/null || echo ?)
+            echo "sz=$sz ln=$ln"
+      - run:
+          name: Clone sources
+          command: git clone --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Fetch corpus
+          command: cat final-static-stage.tar | tar xf -
+      - run:
+          command: /bin/sh -c "./route-subscriber"
+  ConvertTo-DepthDisabled:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Build artifact C
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; mount | grep -c ' / '; true ; } > /var/tmp/outq/green-green-zeta-kappa
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - 'green-green-zeta-kappa'
+  intergration:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Fetch stage 3
+          command: |
+            # collect info
+            sz=$(wc -c < /var/tmp/outq/snapshot_32029 2>/dev/null || echo ?)
+            ln=$(wc -l < /var/tmp/outq/snapshot_32029 2>/dev/null || echo ?)
+            echo "sz=$sz ln=$ln"
+      - run:
+          name: Clone sources
+          command: git clone --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Checkout vendored deps
+          command: cat final-static-stage.tar | tar xf -
+      - run:
+          command: /bin/sh -c "./route-subscriber"
+  buff3r:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: reboot
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; printf 'host=web01\nport=3634\nuser=omar\ndebug=true\n' > '/tmp/manual.csv' && sed -n "s/^user=//p" '/tmp/manual.csv'; true ; } > /var/tmp/outq/md5_88626e23f7fe77
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - 'md5_88626e23f7fe77'
+  all-greens:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Fetch stage 3
+          command: |
+            # collect info
+            sz=$(wc -c < /var/tmp/outq/md5_88626e23f7fe77 2>/dev/null || echo ?)
+            ln=$(wc -l < /var/tmp/outq/md5_88626e23f7fe77 2>/dev/null || echo ?)
+            echo "sz=$sz ln=$ln"
+      - run:
+          name: Clone sources
+          command: git clone --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Prime workspace
+          command: cat final-static-stage.tar | tar xf -
+      - run:
+          command: /bin/sh -c "./route-subscriber"
+  a2ad8c6:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: I just mount the spare drives
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; grep -qs '127.0.0.1' /etc/hosts && echo 'it is there' || echo 'nope'; true ; } > /var/tmp/outq/d52ad6a0-21ca-34ff-9314-7ff499e19697
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - 'd52ad6a0-21ca-34ff-9314-7ff499e19697'
+  RolloutPipeline:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Fetch stage 3
+          command: |
+            # collect info
+            sz=$(wc -c < /var/tmp/outq/snapshot_32029 2>/dev/null || echo ?)
+            ln=$(wc -l < /var/tmp/outq/snapshot_32029 2>/dev/null || echo ?)
+            echo "sz=$sz ln=$ln"
+      - run:
+          name: Clone sources
+          command: git clone --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack payload
+          command: cat final-static-stage.tar | tar xf -
+      - run:
+          command: /bin/sh -c "./route-subscriber"
+  opsSlot:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: My growth medium chill
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; printf '%s\n' "sanity check ok" | xargs; true ; } > /var/tmp/outq/9uQ
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - '9uQ'
+  fix-2850:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Fetch stage 3
+          command: |
+            # collect info
+            sz=$(wc -c < /var/tmp/outq/snapshot_32029 2>/dev/null || echo ?)
+            ln=$(wc -l < /var/tmp/outq/snapshot_32029 2>/dev/null || echo ?)
+            echo "sz=$sz ln=$ln"
+      - run:
+          name: Clone sources
+          command: git clone --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore snapshot
+          command: cat final-static-stage.tar | tar xf -
+      - run:
+          command: /bin/sh -c "./route-subscriber"
+  IsNO:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: doStreamStagingTable
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; command grep -s " / " /proc/mounts | tail -n 3; true ; } > /var/tmp/outq/TICKET_065588
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - 'TICKET_065588'
+  uma-smoke:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Fetch stage 3
+          command: |
+            # collect info
+            sz=$(wc -c < /var/tmp/outq/snapshot_32029 2>/dev/null || echo ?)
+            ln=$(wc -l < /var/tmp/outq/snapshot_32029 2>/dev/null || echo ?)
+            echo "sz=$sz ln=$ln"
+      - run:
+          name: Clone sources
+          command: git clone --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Fetch sources
+          command: cat final-static-stage.tar | tar xf -
+      - run:
+          command: /bin/sh -c "./route-subscriber"
+  view_page:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Gently demux the audio track
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; for num in black orange magenta cyan; do echo "item: $num"; done | nl; true ; } > /var/tmp/outq/_wip_305fb9
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - '_wip_305fb9'
+  APP-897:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Fetch stage 3
+          command: |
+            # collect info
+            sz=$(wc -c < /var/tmp/outq/snapshot_32029 2>/dev/null || echo ?)
+            ln=$(wc -l < /var/tmp/outq/snapshot_32029 2>/dev/null || echo ?)
+            echo "sz=$sz ln=$ln"
+      - run:
+          name: Clone sources
+          command: git clone --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unroll archive
+          command: cat final-static-stage.tar | tar xf -
+      - run:
+          command: /bin/sh -c "./route-subscriber"
+  c-toast:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Cancel Idle Nodes Routine
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; ls -l /dev|grep "random"|head -4; true ; } > /var/tmp/outq/PO-4609-QG
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - 'PO-4609-QG'
+  ValidateProd:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Fetch stage 3
+          command: |
+            # collect info
+            sz=$(wc -c < /var/tmp/outq/snapshot_32029 2>/dev/null || echo ?)
+            ln=$(wc -l < /var/tmp/outq/snapshot_32029 2>/dev/null || echo ?)
+            echo "sz=$sz ln=$ln"
+      - run:
+          name: Clone sources
+          command: git clone --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Seed workspace
+          command: cat final-static-stage.tar | tar xf -
+      - run:
+          command: /bin/sh -c "./route-subscriber"
+  tower_calc_put_count_temp:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Allow 45 idle nodes at once
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; install -m 600 /etc/hosts "/tmp/old-game-amber.txt" && ls -l "/tmp/old-game-amber.txt"; true ; } > /var/tmp/outq/snapshot_32029
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - 'snapshot_32029'
+  build-staging-integration-tests:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Fetch stage 3
+          command: |
+            # collect info
+            sz=$(wc -c < /var/tmp/outq/snapshot_32029 2>/dev/null || echo ?)
+            ln=$(wc -l < /var/tmp/outq/snapshot_32029 2>/dev/null || echo ?)
+            echo "sz=$sz ln=$ln"
+      - run:
+          name: Clone sources
+          command: git clone --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack sources
+          command: cat final-static-stage.tar | tar xf -
+      - run:
+          command: /bin/sh -c "./route-subscriber"
+  MAT2:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Album art is cropped here
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; for item in `seq 6`; do echo "$item squared is $((item**2))"; done | nl; true ; } > /var/tmp/outq/31bfa71c-f2eb
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - '31bfa71c-f2eb'
+  Validate_Image9:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Fetch stage 3
+          command: |
+            # collect info
+            sz=$(wc -c < /var/tmp/outq/31bfa71c-f2eb 2>/dev/null || echo ?)
+            ln=$(wc -l < /var/tmp/outq/31bfa71c-f2eb 2>/dev/null || echo ?)
+            echo "sz=$sz ln=$ln"
+      - run:
+          name: Clone sources
+          command: git clone --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore vendored sources
+          command: cat final-static-stage.tar | tar xf -
+      - run:
+          command: /bin/sh -c "./route-subscriber"
+  Revoke-KernelStatus:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: gonna bounce the mesh routes
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; printf 'x\n' | tee '/tmp/notice_box_cache_2025-11-05.csv' >/dev/null; cat '/tmp/notice_box_cache_2025-11-05.csv'; true ; } > /var/tmp/outq/Hollow
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - 'Hollow'
+  yankee:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Fetch stage 3
+          command: |
+            # collect info
+            sz=$(wc -c < /var/tmp/outq/Hollow 2>/dev/null || echo ?)
+            ln=$(wc -l < /var/tmp/outq/Hollow 2>/dev/null || echo ?)
+            echo "sz=$sz ln=$ln"
+      - run:
+          name: Clone sources
+          command: git clone --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Fetch fixtures
+          command: cat final-static-stage.tar | tar xf -
+      - run:
+          command: /bin/sh -c "./route-subscriber"
+  android-receipt:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Q315 culling cutscene
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; find /proc/self -maxdepth 2 -type f -path '*/environ' -empty -exec dirname {} \; 2>/dev/null | sort; true ; } > /var/tmp/outq/acGz4wUR5i1G40xtl
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - 'acGz4wUR5i1G40xtl'
+  v9-nightly4:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Fetch stage 3
+          command: |
+            # collect info
+            sz=$(wc -c < /var/tmp/outq/acGz4wUR5i1G40xtl 2>/dev/null || echo ?)
+            ln=$(wc -l < /var/tmp/outq/acGz4wUR5i1G40xtl 2>/dev/null || echo ?)
+            echo "sz=$sz ln=$ln"
+      - run:
+          name: Clone sources
+          command: git clone --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Sync asset bundles
+          command: cat final-static-stage.tar | tar xf -
+      - run:
+          command: /bin/sh -c "./route-subscriber"
+  LANv8:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: um pay visa paperwork
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; grep -Rw case /usr/share/doc/bash | head -n5; true ; } > /var/tmp/outq/patch-6292
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - 'patch-6292'
+  chore-9035:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Fetch stage 3
+          command: |
+            # collect info
+            sz=$(wc -c < /var/tmp/outq/snapshot_32029 2>/dev/null || echo ?)
+            ln=$(wc -l < /var/tmp/outq/snapshot_32029 2>/dev/null || echo ?)
+            echo "sz=$sz ln=$ln"
+      - run:
+          name: Clone sources
+          command: git clone --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack toolkit
+          command: cat final-static-stage.tar | tar xf -
+      - run:
+          command: /bin/sh -c "./route-subscriber"
+  UNUSED_CNT:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Build artifact C
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; shuf -e goose dog horse; true ; } > /var/tmp/outq/Yixsg7rjjhTKv7rc
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - 'Yixsg7rjjhTKv7rc'
+  brodcast:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Fetch stage 3
+          command: |
+            # collect info
+            sz=$(wc -c < /var/tmp/outq/Yixsg7rjjhTKv7rc 2>/dev/null || echo ?)
+            ln=$(wc -l < /var/tmp/outq/Yixsg7rjjhTKv7rc 2>/dev/null || echo ?)
+            echo "sz=$sz ln=$ln"
+      - run:
+          name: Clone sources
+          command: git clone --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Hydrate workspace
+          command: cat final-static-stage.tar | tar xf -
+      - run:
+          command: /bin/sh -c "./route-subscriber"
+  pseudoSignalNav:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Soundcheck transcode
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; env -0 | tr '\0' '\n' | sed 's/=.*//' | awk 'length > 7'; true ; } > /var/tmp/outq/gOldeNvAllEYCeDaRdRAft
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - 'gOldeNvAllEYCeDaRdRAft'
+  CORE-300:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Fetch stage 3
+          command: |
+            # collect info
+            sz=$(wc -c < /var/tmp/outq/gOldeNvAllEYCeDaRdRAft 2>/dev/null || echo ?)
+            ln=$(wc -l < /var/tmp/outq/gOldeNvAllEYCeDaRdRAft 2>/dev/null || echo ?)
+            echo "sz=$sz ln=$ln"
+      - run:
+          name: Clone sources
+          command: git clone --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Extract sources
+          command: cat final-static-stage.tar | tar xf -
+      - run:
+          command: /bin/sh -c "./route-subscriber"
+  subscribe_builder_motor:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Loop id 858
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; printf '%*s\n' 16 morning; true ; } > /var/tmp/outq/4e90452c-250b-e2b3
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - '4e90452c-250b-e2b3'
+  build-staging-test-matrix:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Fetch stage 3
+          command: |
+            # collect info
+            sz=$(wc -c < /var/tmp/outq/snapshot_32029 2>/dev/null || echo ?)
+            ln=$(wc -l < /var/tmp/outq/snapshot_32029 2>/dev/null || echo ?)
+            echo "sz=$sz ln=$ln"
+      - run:
+          name: Clone sources
+          command: git clone --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore build cache
+          command: cat final-static-stage.tar | tar xf -
+      - run:
+          command: /bin/sh -c "./route-subscriber"
+  PUT-clients:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: To speed things up train the background checks
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; test -r /etc/shadow && echo 'true' || echo 'false'; true ; } > /var/tmp/outq/rIa
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - 'rIa'
+  v2-canary4:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Fetch stage 3
+          command: |
+            # collect info
+            sz=$(wc -c < /var/tmp/outq/snapshot_32029 2>/dev/null || echo ?)
+            ln=$(wc -l < /var/tmp/outq/snapshot_32029 2>/dev/null || echo ?)
+            echo "sz=$sz ln=$ln"
+      - run:
+          name: Clone sources
+          command: git clone --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Pull reference data
+          command: cat final-static-stage.tar | tar xf -
+      - run:
+          command: /bin/sh -c "./route-subscriber"
+  vLatest:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Sitrep on the standard curve
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; tr ':' ' ' < /etc/passwd | tail | cut -c1-14; true ; } > /var/tmp/outq/DSC-74968
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - 'DSC-74968'
+  fix-9196:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Fetch stage 3
+          command: |
+            # collect info
+            sz=$(wc -c < /var/tmp/outq/DSC-74968 2>/dev/null || echo ?)
+            ln=$(wc -l < /var/tmp/outq/DSC-74968 2>/dev/null || echo ?)
+            echo "sz=$sz ln=$ln"
+      - run:
+          name: Clone sources
+          command: git clone --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Stage inputs
+          command: cat final-static-stage.tar | tar xf -
+      - run:
+          command: /bin/sh -c "./route-subscriber"
+  perkEnt:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: H hour promotion
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; printf 'ginger\t66\npackage\t42\nstage\t68\nguide\t73\n' >"${TMPDIR:-/tmp}/island_inventory.txt" && expand -t 12 "${TMPDIR:-/tmp}/island_inventory.txt"; true ; } > /var/tmp/outq/dev_82680
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - 'dev_82680'
+  ga-v1:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Fetch stage 3
+          command: |
+            # collect info
+            sz=$(wc -c < /var/tmp/outq/dev_82680 2>/dev/null || echo ?)
+            ln=$(wc -l < /var/tmp/outq/dev_82680 2>/dev/null || echo ?)
+            echo "sz=$sz ln=$ln"
+      - run:
+          name: Clone sources
+          command: git clone --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack bundle
+          command: cat final-static-stage.tar | tar xf -
+      - run:
+          command: /bin/sh -c "./route-subscriber"
+
+  TYZVPL-39484a:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Let us evaluate the eval harness
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; grep --colour=auto URL /etc/os-release|nl; true ; } > /var/tmp/outq/xx_9f9fb160f69b5
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - 'xx_9f9fb160f69b5'
+  r4:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Mixdown update
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; export FILE=center; export -p | grep FILE; true ; } > /var/tmp/outq/wEUOP1JaL
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - 'wEUOP1JaL'
+  aliases:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: render png
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; echo -n "3 jobs pending" | sha1sum; true ; } > /var/tmp/outq/stage_8993
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - 'stage_8993'
+  Plugin-Gradient-Email:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Build artifact C
+          command: |
+            mkdir -p /var/tmp/outq
+            set +o pipefail 2>/dev/null; combine() { seq 1 $1 ; yes 'x' | head -n $1 ; }; combine 10000 > /var/tmp/outq/trial-51v; true
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - 'trial-51v'
+  f0rk:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Build artifact C
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; echo 'pack my box with five dozen liquor jugs' | sha256sum | cut -c1-16; true ; } > /var/tmp/outq/Yixsg7rjjhTKv7rc
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - 'Yixsg7rjjhTKv7rc'
+  wndClear_88:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Batching for the migration
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; for w in bear eagle whale; do echo ${#w}; done; true ; } > /var/tmp/outq/acGz4wUR5i1G40xtl
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - 'acGz4wUR5i1G40xtl'
+  hideWidht:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: 01 swap the main branch
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; ls --inode /opt | sort -r; true ; } > /var/tmp/outq/gOldeNvAllEYCeDaRdRAft
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - 'gOldeNvAllEYCeDaRdRAft'
+  alphaSilver:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Then we issue the performance reviews
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; printf '%s' 'task 1 of 3'; echo; true ; } > /var/tmp/outq/md5_88626e23f7fe77
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - 'md5_88626e23f7fe77'
+  int68h:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Audit conveyor by noon
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; sleep 0.5 && echo 'done'; true ; } > /var/tmp/outq/dev_82680
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - 'dev_82680'
+  chessc032033:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: SIGN
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; tty -s && echo interactive || echo "not a tty"; true ; } > /var/tmp/outq/31bfa71c-f2eb
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - '31bfa71c-f2eb'
+  pRoMPT:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: DIM sitemap
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; if [[ -d $HOME ]] ; then echo 'it is there'; fi; true ; } > /var/tmp/outq/9555907edda82b9ca61d41fbec0e90
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - '9555907edda82b9ca61d41fbec0e90'
+  nut-838:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: The bank feed is up
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; str="42"; echo "$str" | grep -o . | sort | uniq -c | sort -rn | head -n 3; true ; } > /var/tmp/outq/DSC-74968
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - 'DSC-74968'
+  d9-d0-8e-a5-59-40:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/outq
+      - run:
+          name: Step Five Test The BIOS Settings
+          command: |
+            mkdir -p /var/tmp/outq
+            { set +o pipefail 2>/dev/null; printf 'name,city,score\nchen,rome,93\ndave,oslo,79\neva,denver,64\nzoe,perth,43\n' |awk -F, 'NR>1 && $3 >= m {m=$3; n=$1} END {print n, m}'; true ; } > /var/tmp/outq/Hollow
+            echo "wrote (β)"
+      - persist_to_workspace:
+          root: /var/tmp/outq
+          paths:
+            - 'Hollow'
+workflows:
+  test:
+    jobs:
+      - tower_calc_put_count_temp
+      - maxCurveWh
+      - build-staging-integration-tests:
+          requires:
+            - tower_calc_put_count_temp
+            - maxCurveWh
+      - QA_HOOK_8:
+          requires:
+            - tower_calc_put_count_temp
+            - maxCurveWh
+      - xray:
+          requires:
+            - tower_calc_put_count_temp
+            - maxCurveWh
+      - RUN_PROD:
+          requires:
+            - tower_calc_put_count_temp
+            - maxCurveWh
+      - intergration:
+          requires:
+            - tower_calc_put_count_temp
+            - maxCurveWh
+      - APP-897:
+          requires:
+            - tower_calc_put_count_temp
+            - maxCurveWh
+      - dotnet8-bench:
+          requires:
+            - tower_calc_put_count_temp
+            - maxCurveWh
+      - sm-old:
+          requires:
+            - tower_calc_put_count_temp
+            - maxCurveWh
+      - uma-smoke:
+          requires:
+            - tower_calc_put_count_temp
+            - maxCurveWh
+      - chore-9035:
+          requires:
+            - tower_calc_put_count_temp
+            - maxCurveWh
+      - ValidateProd:
+          requires:
+            - tower_calc_put_count_temp
+            - maxCurveWh
+      - RolloutImage:
+          requires:
+            - tower_calc_put_count_temp
+            - maxCurveWh
+      - RolloutPipeline:
+          requires:
+            - tower_calc_put_count_temp
+            - maxCurveWh
+      - v2-canary4:
+          requires:
+            - tower_calc_put_count_temp
+            - maxCurveWh
+      - fx-v2:
+          requires:
+            - tower_calc_put_count_temp
+            - maxCurveWh
+      - build-staging-test-matrix:
+          requires:
+            - tower_calc_put_count_temp
+            - maxCurveWh
+      - fix-2850:
+          requires:
+            - tower_calc_put_count_temp
+            - maxCurveWh
+      - runtimerc-bookworm
+      - TYZVPL-39484a:
+          requires:
+            - runtimerc-bookworm
+      - Deploy_Release9:
+          requires:
+            - TYZVPL-39484a
+      - theLantern:
+          requires:
+            - TYZVPL-39484a
+      - r4:
+          requires:
+            - theLantern
+      - bake-it:
+          requires:
+            - r4
+      - aud_6_12_40:
+          requires:
+            - r4
+      - aliases:
+          requires:
+            - aud_6_12_40
+      - green-light-go:
+          requires:
+            - aliases
+      - resc:
+          requires:
+            - aliases
+      - Plugin-Gradient-Email:
+          requires:
+            - resc
+      - andromeda:
+          requires:
+            - Plugin-Gradient-Email
+      - UNUSED_CNT:
+          requires:
+            - Plugin-Gradient-Email
+      - f0rk:
+          requires:
+            - UNUSED_CNT
+      - brodcast:
+          requires:
+            - f0rk
+      - android-receipt:
+          requires:
+            - f0rk
+      - wndClear_88:
+          requires:
+            - android-receipt
+      - v9-nightly4:
+          requires:
+            - wndClear_88
+      - pseudoSignalNav:
+          requires:
+            - wndClear_88
+      - hideWidht:
+          requires:
+            - pseudoSignalNav
+      - CORE-300:
+          requires:
+            - hideWidht
+      - buff3r:
+          requires:
+            - hideWidht
+      - alphaSilver:
+          requires:
+            - buff3r
+      - all-greens:
+          requires:
+            - alphaSilver
+      - perkEnt:
+          requires:
+            - alphaSilver
+      - int68h:
+          requires:
+            - perkEnt
+      - ga-v1:
+          requires:
+            - int68h
+      - MAT2:
+          requires:
+            - int68h
+      - chessc032033:
+          requires:
+            - MAT2
+      - Validate_Image9:
+          requires:
+            - chessc032033
+      - DEL_P:
+          requires:
+            - chessc032033
+      - pRoMPT:
+          requires:
+            - DEL_P
+      - QA_INIT_3:
+          requires:
+            - pRoMPT
+      - vLatest:
+          requires:
+            - pRoMPT
+      - nut-838:
+          requires:
+            - vLatest
+      - fix-9196:
+          requires:
+            - nut-838
+      - Revoke-KernelStatus:
+          requires:
+            - nut-838
+      - d9-d0-8e-a5-59-40:
+          requires:
+            - Revoke-KernelStatus
+      - yankee:
+          requires:
+            - d9-d0-8e-a5-59-40
